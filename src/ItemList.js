@@ -1,13 +1,19 @@
 import { useState } from "react"
 
 
-const ItemList=(props)=>{
+const ItemList=({lists,onDel,setData})=>{
     const [quan,setQuan]=useState("")
 
     const ul=document.querySelector("ul")
 
-    const handleBuyButton=()=>{
-
+    const handleBuyButton=(id)=>{
+        const editedList = lists.map((list)=>{
+            if(list.id===id){
+                return {...list,quantity:Number(list.quantity)-Number(quan)}
+            }
+            return list;
+        })
+        setData(editedList)
     }
 
     
@@ -17,7 +23,7 @@ const ItemList=(props)=>{
     }
 
     const handleDeleteButton=(e)=>{
-        props.onDel();
+        onDel();
         let del=e.target.parentElement;
         ul.removeChild(del);
     }
@@ -27,11 +33,11 @@ const ItemList=(props)=>{
     return(
         <>
        
-        {props.lists.map((list)=>{
+        {lists?.map((list)=>{
             return <li key={list.id}>
                 {list.name+"--------------Rs: "+list.price+"--------------"+list.quantity+"KG"}
                 <input type="number" onChange={handleQuantityChange}  />
-                <button type="click" id="buy" onClick={handleBuyButton}>Buy</button>
+                <button type="click" onClick={()=>handleBuyButton(list.id)}>Buy</button>
                 <button type="click" onClick={handleDeleteButton}>Delete</button>
             </li>
         })}

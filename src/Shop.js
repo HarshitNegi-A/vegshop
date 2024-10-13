@@ -53,7 +53,7 @@ const Shop=()=>{
             <button type="submit">Add To Shop</button>
         </form>
         <ul style={{listStyle:"none"}}>
-            <ItemList lists={data} onDel={handleOnDel} />
+            <ItemList lists={data} onDel={handleOnDel} setData={setData}/>
         </ul>
         
         <h2>Total:{count}</h2>
